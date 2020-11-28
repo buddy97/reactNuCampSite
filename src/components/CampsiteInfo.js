@@ -42,7 +42,7 @@ import { Link } from 'react-router-dom';
 
     function CampsiteInfo(props) {
       console.log(props.campsite);
-      if (props.campsite) {
+      if (props.campsite) { 
           return (
             <div className="container">
                 <div className="row">
