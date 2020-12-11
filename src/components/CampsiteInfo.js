@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-pascal-case */
 import React, { Component } from 'react'
 import { Card, CardImg, CardText, CardBody, Breadcrumb, BreadcrumbItem, Button, Modal, ModalBody, ModalHeader, Row, Label, Col } from 'reactstrap';
 import { Link } from 'react-router-dom';
@@ -32,11 +33,10 @@ class CommentForm extends Component {
       isModalOpen: !this.state.isModalOpen,
     });
   }
-  handleSubmit(values) {
-    console.log(values)
-    console.log("Current state is: " + JSON.stringify(values));
-    alert("Current state is: " + JSON.stringify(values));
-  }
+   handleSubmit(values) {
+        this.toggleModal();
+        this.props.addComment(this.props.campsiteId, values.rating, values.author, values.text);
+    }
 
   render() {
     return (
@@ -104,9 +104,9 @@ class CommentForm extends Component {
                 </Label>
                 <Col md={10}>
                   <Control.textarea
-                    model=".comment"
-                    id="Comment"
-                    name="Comment"
+                    model=".text"
+                    id="Text"
+                    name="Text"
                     placeholder="Comment Here"
                     rows={6}
                     className="form-control"
@@ -150,7 +150,7 @@ class CommentForm extends Component {
       );
     }
 
-     function RenderComments({ comments }) {
+     function RenderComments({ comments, addComment, campsiteId }) {
        if (comments)
          return (
            <div className="col-md-5 m-1">
@@ -170,7 +170,7 @@ class CommentForm extends Component {
                  </div>
                );
              })}
-             <CommentForm />
+             <CommentForm campsiteId={campsiteId} addComment={addComment} />
            </div>
          );
        return <div />;
@@ -193,7 +193,7 @@ class CommentForm extends Component {
                 </div>
                 <div className="row">
                     <RenderCampsite campsite={props.campsite} />
-                    <RenderComments comments={props.comments} />
+                    <RenderComments comments={props.comments} addComment={props.addComment} campsiteId={props.campsite.id}/>
                 </div>
             </div>
         );
